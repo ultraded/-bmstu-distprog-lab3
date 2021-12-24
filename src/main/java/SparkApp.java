@@ -8,6 +8,7 @@ public class SparkApp {
         SparkConf conf = new SparkConf().setAppName("lab3");
         JavaSparkContext sparkContext = new JavaSparkContext(conf);
 
-        JavaRDD = sparkContext.textFile()
-    }
+        JavaRDD<String> flights = sparkContext.textFile("664600583_T_ONTIME_sample.csv")
+        JavaRDD<String> airports = sparkContext.textFile("")
+     }
 }
