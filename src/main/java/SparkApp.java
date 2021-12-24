@@ -2,6 +2,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.broadcast.Broadcast;
 import scala.Int;
 import scala.Tuple2;
 
@@ -42,8 +43,8 @@ public class SparkApp {
     JavaRDD<String> out = flightSerCountStrings.map(value -> {
         Map<Integer, String> airportNames = broadcast.value();
 
-        String aiportNameOfStart = airportNames.get(value._1()._1());
-        String aiportNameOfFinish = airportNames.get(value._1()._2());
+        String airportNameOfStart = airportNames.get(value._1()._1());
+        String airportNameOfFinish = airportNames.get(value._1()._2());
 
         return aiportNameOfStart + " -> " + aiportNameOfFinish + "\n" + value._2();
     });
