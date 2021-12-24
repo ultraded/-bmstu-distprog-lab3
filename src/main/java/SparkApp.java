@@ -30,5 +30,10 @@ public class SparkApp {
                                         p.getCancelled() != ZERO),
                                 FlightSerCount::add);
      }
+    JavaPairRDD<Tuple2<Integer, Integer>, String> flightSerCountStrings = flightSerCounts
+            .mapToPair(value -> {
+                value._2();
+                return new Tuple2<>(value._1(), FlightSerCount.toOutString(value._2()));
+            });
 }
 
