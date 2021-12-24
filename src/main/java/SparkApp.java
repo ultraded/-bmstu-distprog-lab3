@@ -18,6 +18,6 @@ public class SparkApp {
         JavaPairRDD<Integer, String> airportsRDD = airports.mapToPair(Util::parseAirport);
         JavaPairRDD<Tuple2<Integer, Integer>, FlightSerializable> flightsRDD = flights.mapToPair(Util::parseFlight);
 
-       
+
 }
 
