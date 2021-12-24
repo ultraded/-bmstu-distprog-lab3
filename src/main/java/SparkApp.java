@@ -18,7 +18,17 @@ public class SparkApp {
         JavaPairRDD<Integer, String> airportsRDD = airports.mapToPair(Util::parseAirport);
         JavaPairRDD<Tuple2<Integer, Integer>, FlightSerializable> flightsRDD = flights.mapToPair(Util::parseFlight);
 
-        Jav
+        JavaPairRDD<Tuple2<Integer, Integer>, FlightSerCount> flightSerCounts =
+                dataOfAirportDelays
+                        .combineByKey(p -> new FlightSerCount(1,
+                                        p.getArrDelay() > ZERO ? 1 : 0,
+                                        p.getArrDelay(),
+                                        p.getCancelled() == ZERO ? 0 : 1),
+                                (flightSerCount, p) -> FlightSerCount.addValue(flightSerCount,
+                                        p.getArrDelay(),
+                                        p.getArrDelay() != ZERO,
+                                        p.getCancelled() != ZERO),
+                                FlightSerCount::add);
      }
 }
 
