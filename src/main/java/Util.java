@@ -3,12 +3,19 @@ import scala.Tuple2;
 
 final public class Util {
     private static final String DELIMITER = ",";
-    private static final int ORIGIN_INDEX = 11, DESTINATION_INDEX = 14, DELAY_INDEX = 18, CANCELLED_INDEX = 19;
+    private static final int ORIGIN_INDEX = 11, DESTINATION_INDEX = 14, DELAY_INDEX = 17, CANCELLED_INDEX = 19;
     private static int AIRPORTID_INDEX = 0, AIRPORTNAME_INDEX = 1;
     private static final float ZERO = 0.0f;
 
     private static String removeQuotes(String strWithQuotes) { return strWithQuotes.replaceAll("\'", ""); }
 
+    private static float checkNull(String current) {
+        if (current.equals("")) {
+            return ZERO;
+        } else {
+            return Float.parseFloat(current);
+        }
+    }
     public static boolean isCanceledOrDelayedFilter(String[] flight) {
         return ((Float.parseFloat(flight[CANCELLED_INDEX]) == ZERO)
                 || (Float.parseFloat(flight[DELAY_INDEX]) > ZERO));
@@ -26,10 +33,10 @@ final public class Util {
         String[] table = flight.split(DELIMITER);
         int destAirportID = Integer.parseInt(table[DESTINATION_INDEX]);
         int originalAirportID = Integer.parseInt(table[ORIGIN_INDEX]);
-        float arrDelay = checkNull(table[ARRDELAY]);
-        float iscancelled = Float.parseFloat(table[CANCELLED]);
+        float arrDelay = checkNull(table[DELAY_INDEX]);
+        float isCancelled = Float.parseFloat(table[CANCELLED_INDEX]);
         return new Tuple2<>(new Tuple2<>(originalAirportID, destAirportID),
-                new FlightSerializable(destAirportID, originalAirportID, arrDelay, iscancelled));
+                new FlightSerializable(destAirportID, originalAirportID, arrDelay, isCancelled));
     }
 
 
