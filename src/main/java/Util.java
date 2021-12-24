@@ -1,5 +1,5 @@
 final public class Util {
-    private static final String DELIMITER = ",";
-    private static final int AIPORT_ID_INDEX = 14, DELAY_INDEX = 17;
-    private static final boolean FLIGHT_WC_IDENTIFICATION = false;
+    private static final String DELIMITERFORNAMES = "\",", DELIMITERFORDELAYS = ",";
+    private static final int  DESTAIRPORTIDFORNAMES= 0, NAMEAIRPORT = 1, ORIGINAIRPORTID = 11, DESTAIRPORTIDFORDELAYS = 14, ARRDELAY = 17, CANCELLED = 19;
+    private static final String NULLSTR = "";
 }
