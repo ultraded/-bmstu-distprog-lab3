@@ -4,8 +4,8 @@ public class FlightSerializable implements Serializable {
     private int originId, destinationId;
     private float delay, cancelled;
 
-    public int getOriginId() {
-        return originId;
+
+    public FlightSerializable() {
     }
 
     public FlightSerializable(int originId, int destinationId, float delay, float cancelled) {
@@ -13,6 +13,10 @@ public class FlightSerializable implements Serializable {
         this.destinationId = destinationId;
         this.delay = delay;
         this.cancelled = cancelled;
+    }
+
+    public int getOriginId() {
+        return originId;
     }
 
     public int getDestinationId() {
