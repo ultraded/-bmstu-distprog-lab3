@@ -1,2 +1,3 @@
-public class Util {
+final public class Util {
+    private static 
 }
