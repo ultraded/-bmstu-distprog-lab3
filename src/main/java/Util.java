@@ -9,6 +9,8 @@ final public class Util {
                 || (Float.parseFloat(flight[DELAY_INDEX]) > ZERO));
     }
 
+    public static Tuple2<> parseFlight
+
 
 
 }
