@@ -5,6 +5,8 @@ import org.apache.spark.api.java.JavaSparkContext;
 import scala.Int;
 import scala.Tuple2;
 
+import java.util.Map;
+
 
 public class SparkApp {
 
@@ -35,5 +37,17 @@ public class SparkApp {
                 value._2();
                 return new Tuple2<>(value._1(), FlightSerCount.toOutString(value._2()));
             });
+    final Broadcast<Map<Integer, String>> broadcast = sc.broadcast(dataOfAiportNames.collectAsMap());
+
+    JavaRDD<String> out = flightSerCountStrings.map(value -> {
+        Map<Integer, String> airportNames = broadcast.value();
+
+        String aiportNameOfStart = airportNames.get(value._1()._1());
+        String aiportNameOfFinish = airportNames.get(value._1()._2());
+
+        return aiportNameOfStart + " -> " + aiportNameOfFinish + "\n" + value._2();
+    });
+
+        out.saveAsTextFile("hdfs://localhost:9000/user/ultraded/output");
 }
 
