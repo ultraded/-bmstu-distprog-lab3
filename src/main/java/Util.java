@@ -1,3 +1,5 @@
+import scala.Tuple2;
+
 final public class Util {
     private static final String AIRPORTS_DELIMITER = "\",", FLIGHTS_DELIMITER = ",";
     private static final int ORIGIN_INDEX = 11, DESTINATION_INDEX = 14, DELAY_INDEX = 18, CANCELLED_INDEX = 19;
@@ -9,7 +11,9 @@ final public class Util {
                 || (Float.parseFloat(flight[DELAY_INDEX]) > ZERO));
     }
 
-    public static Tuple2<> parseFlight
+    public static Tuple2<Integer,String> parseAirport(String airport) {
+        airport.split(AIRPORTS_DELIMITER);
+    }
 
 
 
