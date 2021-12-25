@@ -6,6 +6,8 @@ import org.apache.spark.broadcast.Broadcast;
 import scala.Int;
 import scala.Tuple2;
 
+import java.util.Map;
+
 
 public class SparkApp {
 
@@ -32,14 +34,20 @@ public class SparkApp {
                                 p.getDelay() != 0.0f,
                                 p.getCancelled() != 0.0f),
                         CounterSerializable::add);
-        JavaPairRDD<Tuple2<Integer, Integer>,String> counterStr= counters.mapToPair(
+        JavaPairRDD<Tuple2<Integer, Integer>, String> counterStr = counters.mapToPair(
                 value -> {
                     value._2();
                     return new Tuple2<>(value._1(), CounterSerializable.toOutString(value._2()));
                 });
-        final Broadcast<Map<Integer,String>> broadcast = sparkContext.broadcast(airports.col)
-                }
-        )
+        final Broadcast<Map<Integer, String>> broadcast = sparkContext.broadcast(airportsRDD.collectAsMap());
+
+        JavaRDD<String> out = counterStr.map(value -> {
+            Map<Integer, String> airportNames = broadcast.value();
+            String originName = airportNames.get(value._1()._1()),
+                    destinationName = airportNames.get(value._1()._2());
+            return originName + " -> " + destinationName + "\n" + value._2();
+        });
+
     }
 }
 
