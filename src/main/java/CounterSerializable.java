@@ -34,17 +34,19 @@ public class CounterSerializable implements Serializable {
 
 
     public static CounterSerializable addValue(CounterSerializable a, float maxArrDelay, boolean isDelayed, boolean isCancelled) {
-        return new CounterSerializable(a.getTotalFlights() + 1,
-                isDelayed ? a.getDelayedFlights() + 1 : a.getDelayedFlights(),
+        return new CounterSerializable(
                 Math.max(a.getMaxDelay(), maxArrDelay),
+                a.getTotalFlights() + 1,
+                isDelayed ? a.getDelayedFlights() + 1 : a.getDelayedFlights(),
                 isCancelled ? a.getDelayedFlights() + 1 : a.getDelayedFlights());
     }
 
     public static CounterSerializable add(CounterSerializable a, CounterSerializable b) {
-        return new CounterSerializable(a.getTotalFlights() + b.getTotalFlights(),
-                a.getDelayedFlights() + b.getDelayedFlights(),
+        return new CounterSerializable(
                 Math.max(a.getMaxDelay(), b.getMaxDelay()),
-                a.getDelayedFlights() + b.getDelayedFlights());
+                a.getTotalFlights() + b.getTotalFlights(),
+                a.getDelayedFlights() + b.getDelayedFlights(),
+                a.getCancelledFlights() + b.getCancelledFlights());
     }
 
     public static String toOutString(CounterSerializable a) {

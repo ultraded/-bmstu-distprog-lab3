@@ -2,6 +2,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.broadcast.Broadcast;
 import scala.Int;
 import scala.Tuple2;
 
@@ -18,6 +19,27 @@ public class SparkApp {
         JavaPairRDD<Integer, String> airportsRDD = airports.mapToPair(Util::parseAirport);
         JavaPairRDD<Tuple2<Integer, Integer>, FlightSerializable> flightsRDD = flights.mapToPair(Util::parseFlight);
 
-
+        JavaPairRDD<Tuple2<Integer, Integer>, CounterSerializable> counters =
+                flightsRDD.combineByKey(
+                        f -> new CounterSerializable(
+                                f.getDelay(),
+                                1,
+                                f.getDelay() > 0.0f ? 1 : 0,
+                                f.getCancelled() == 0.0f ? 0 : 1),
+                        (counter, p) -> CounterSerializable.addValue(
+                                counter,
+                                p.getDelay(),
+                                p.getDelay() != 0.0f,
+                                p.getCancelled() != 0.0f),
+                        CounterSerializable::add);
+        JavaPairRDD<Tuple2<Integer, Integer>,String> counterStr= counters.mapToPair(
+                value -> {
+                    value._2();
+                    return new Tuple2<>(value._1(), CounterSerializable.toOutString(value._2()));
+                });
+        final Broadcast<Map<Integer,String>> broadcast = sparkContext.broadcast(airports.col)
+                }
+        )
+    }
 }
 
