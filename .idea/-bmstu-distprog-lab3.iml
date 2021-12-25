@@ -156,5 +156,18 @@
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-xc:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hadoop:hadoop-mapreduce-client-jobclient:2.10.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hadoop:hadoop-annotations:2.10.1" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/hadoop-2.10.1/share/hadoop" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/hadoop-2.10.1/share/hadoop/common/jdiff" />
+          <root url="file://$USER_HOME$/hadoop-2.10.1/share/hadoop/hdfs/jdiff" />
+          <root url="file://$USER_HOME$/hadoop-2.10.1/share/hadoop/mapreduce/jdiff" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
