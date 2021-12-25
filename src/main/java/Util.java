@@ -39,8 +39,5 @@ final public class Util {
                 new FlightSerializable(destAirportID, originalAirportID, arrDelay, isCancelled));
     }
 
-    public static Tuple2<Integer, Integer>
-
-
 
 }

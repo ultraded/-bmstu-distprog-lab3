@@ -47,6 +47,7 @@ public class SparkApp {
                     destinationName = airportNames.get(value._1()._2());
             return originName + " -> " + destinationName + "\n" + value._2();
         });
+        out.saveAsTextFile("hdfs://localhost:9000/user/ultraded/output");
 
     }
 }
